@@ -6,30 +6,20 @@ palos = ["Corazon", "Diamante", "Trebol", "Pica"]
 colores = ["Negro", "Rojo"]
 
 function checkIfRepeated(p1, p2, p3){
-
-    let flag = 0
-
-    Carta.find({valor:String(p1), color:String(p2), palo:String(p3)})
-        .then(cartas=>{
-            console.log(cartas)
-        }, flag = 1)
-        .catch((err)=>{
-            console.log(err)
-        })
-
-    return flag
+    //console.log(Carta.find({valor:String(p1), color:String(p2), palo:String(p3)}).count())
+    return Carta.find({valor:String(p1), color:String(p2), palo:String(p3)}).count()
 }
 
 
 exports.postAgregarCarta = async (req, res)=>{
     const carta = new Carta(req.body);
 
-    console.log(palos.includes(carta.palo))
+    /*console.log(palos.includes(carta.palo))
     console.log(valores.includes(carta.valor))
-    console.log(colores.includes(carta.color))
-    console.log(checkIfRepeated(req.body))
+    console.log(colores.includes(carta.color))*/
+    //Carta.find(/*{valor:String(carta.valor), color:String(carta.color), palo:String(carta.palo)}*/).count()
     if (valores.includes(carta.valor) && palos.includes(carta.palo)
-    && colores.includes(carta.color) /*&& checkIfRepeated(carta.valor, carta.color, carta.palo) == 0*/){
+    && colores.includes(carta.color) /*&& checkIfRepeated(carta.valor, carta.color, carta.palo) < 0*/){
         try{
             await carta.save()
             console.log(carta)
